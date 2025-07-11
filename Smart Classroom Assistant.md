@@ -1,4 +1,6 @@
-Smart Classroom Assistant: Interactive Demo & Code WalkthroughThis document provides a guided tour through the core functionalities and code implementation of the Smart Classroom Assistant. It's structured like a simplified Jupyter Notebook to help you understand the concepts alongside the code snippets.1. Project Setup and Core UtilitiesBefore diving into the main application, let's look at the essential imports and utility functions that power the assistant.1.1. Key ImportsWe leverage several powerful libraries for AI, web interaction, and file processing.import streamlit as st # For the web UI
+Smart Classroom Assistant: Interactive Demo & Code Walkthrough
+This document provides a guided tour through the core functionalities and code implementation of the Smart Classroom Assistant. It's structured like a simplified Jupyter Notebook to help you understand the concepts alongside the code snippets.1. Project Setup and Core UtilitiesBefore diving into the main application, let's look at the essential imports and utility functions that power the assistant.1.1. Key ImportsWe leverage several powerful libraries for AI, web interaction, and file processing.
+import streamlit as st # For the web UI
 import requests # For making HTTP requests to APIs
 import json # For handling JSON data
 import os # For environment variables and file paths
