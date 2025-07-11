@@ -1,4 +1,4 @@
-"Smart Classroom Assistant: Interactive Demo & Code Walkthrough"
+Smart Classroom Assistant: Interactive Demo & Code Walkthrough
 This document provides a guided tour through the core functionalities and code implementation of the Smart Classroom Assistant. It's structured like a simplified Jupyter Notebook to help you understand the concepts alongside the code snippets.
 
 1. Project Setup and Core Utilities
