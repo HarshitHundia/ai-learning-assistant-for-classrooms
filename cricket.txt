@@ -1,0 +1,124 @@
+Cricket: The Gentleman's Game
+Cricket is a bat-and-ball game played between two teams of eleven players on a cricket field, at the centre of which is a 22-yard (20-metre) pitch with two wickets, each comprising two bails balanced on three stumps. The batting side scores runs by striking the ball bowled at the wicket with a bat, while the bowling and fielding side tries to prevent this and dismiss each batter (so they are "out"). Means of dismissal include bowling the ball to dislodge a bail from the stumps, catching a hit ball before it bounces, and hitting the stumps with the ball when a batter is not in their ground. When ten batters have been dismissed, the innings ends and the teams swap roles. The game is adjudicated by two umpires, assisted by a third umpire and match referee in international matches.
+
+1. History and Origin
+Origins: Cricket originated in south-east England in the 16th century. By the end of the 18th century, it had developed into England's national sport.
+
+Global Spread: The expansion of the British Empire led to cricket being played overseas, and by the mid-19th century, the first international matches were being held.
+
+Governing Body: The International Cricket Council (ICC) is the global governing body for cricket, founded in 1909 as the Imperial Cricket Conference by representatives from England, Australia, and South Africa.
+
+2. Basic Rules and Objective
+Teams: Two teams of 11 players each.
+
+Objective: The batting team aims to score runs, while the bowling/fielding team aims to dismiss the batters and restrict runs. The team with the most runs at the end of the match wins.
+
+The Pitch: A rectangular strip 22 yards (20.12 meters) long and 10 feet (3.05 meters) wide.
+
+Wickets: Two sets of three wooden stumps topped with two bails, placed at each end of the pitch.
+
+Bowling: The bowler bowls the ball from one end of the pitch towards the wicket at the other end, where a batter stands.
+
+Batting: Batters try to hit the bowled ball and score runs. Two batters are always on the field for the batting team.
+
+Dismissals (Outs): A batter can be dismissed (declared "out") in various ways, including:
+
+Bowled: The ball hits the stumps and dislodges a bail.
+
+Caught: A fielder catches the ball after it has been struck by the bat but before it hits the ground.
+
+Leg Before Wicket (LBW): The ball hits the batter's leg, and the umpire determines it would have hit the stumps had the leg not been there.
+
+Run Out: A fielder hits the stumps with the ball while a batter is out of their ground (crease) attempting a run.
+
+Stumped: The wicket-keeper (a fielder behind the wicket) dislodges the bails with the ball when the batter is out of their crease and missed the ball.
+
+Innings: A period during which one team bats and the other bowls/fields. Once 10 batters are out, or a declaration/time limit is reached, the innings ends.
+
+3. Scoring Runs
+Hitting and Running: Batters hit the ball and run between the wickets, completing a run for each time they cross.
+
+Boundaries:
+
+Four: If the ball reaches the boundary rope after hitting the ground, 4 runs are awarded.
+
+Six: If the ball clears the boundary rope without hitting the ground, 6 runs are awarded.
+
+Extras: Runs can also be scored from "extras" such as wides, no-balls, byes, and leg byes, which are not credited to the batter.
+
+4. Key Player Roles
+Batters (Batsmen/Batswomen): Focus on scoring runs.
+
+Bowlers: Focus on taking wickets and restricting runs. Categorized by pace (fast, medium-pace) or spin (off-spin, leg-spin).
+
+Fielders: Positioned around the field to stop runs and take catches.
+
+Wicket-keeper: A specialized fielder who stands behind the stumps at the batter's end, responsible for taking catches, stumping, and run-outs.
+
+All-rounder: A player proficient in both batting and bowling.
+
+Captain: Leads the team, makes strategic decisions (field placements, bowling changes).
+
+5. Formats of Cricket
+Cricket is played in various formats, differing primarily in the number of innings and overs (sets of six balls) per team.
+
+Test Cricket:
+
+The longest and most traditional format, played over five days.
+
+Each team has two innings.
+
+Focus on endurance, strategy, and mental toughness.
+
+Considered the "ultimate" test of cricketing skill.
+
+One Day International (ODI):
+
+Each team bats for a fixed number of overs, typically 50.
+
+Played over a single day.
+
+Balance between aggressive batting and tactical bowling.
+
+The Cricket World Cup is played in this format.
+
+Twenty20 (T20):
+
+The shortest and most explosive format.
+
+Each team bats for a maximum of 20 overs.
+
+Designed for fast-paced, high-scoring action, popularizing the game.
+
+Includes domestic leagues like the Indian Premier League (IPL), Big Bash League (BBL), etc.
+
+Other Formats:
+
+First-Class Cricket: Domestic multi-day matches, a precursor to Test cricket.
+
+List A Cricket: Domestic one-day matches, a precursor to ODIs.
+
+The Hundred/T10: Even shorter, more condensed formats gaining popularity.
+
+6. Key Terminology (Glossary)
+Over: A set of six consecutive balls bowled by one bowler from one end of the pitch.
+
+Maiden Over: An over in which no runs are scored off the bat.
+
+Wicket: Can refer to the physical stumps, the dismissal of a batter, or the pitch itself.
+
+Crease: Lines marked on the pitch that define the batter's safe ground and the bowler's legal delivery area.
+
+Outfield: The grassy area beyond the main pitch where fielders are positioned.
+
+Innings Break: A short break between innings.
+
+Declaration: When the batting captain closes their innings before all 10 batters are out.
+
+Follow-on: In Test cricket, if the first batting team has a large lead, they can force the opposition to bat again immediately.
+
+No-Ball: An illegally bowled delivery, resulting in an extra run and a free hit for the batter (in limited-overs cricket).
+
+Wide: A ball bowled too far from the batter to be hit, resulting in an extra run.
+
+Cricket is a sport rich in tradition, strategy, and statistics, loved by billions worldwide. Its various formats offer different experiences, from the strategic battles of Test cricket to the explosive entertainment of T20.

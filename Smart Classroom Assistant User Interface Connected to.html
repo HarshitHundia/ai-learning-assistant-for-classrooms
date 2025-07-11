@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Classroom Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for better content flow */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px; /* Increased max-width for more content */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4f46e5; /* Indigo 600 */
+            color: white;
+            padding: 20px 24px;
+            font-size: 1.75rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            text-align: center;
+            border-bottom: 4px solid #3730a3; /* Indigo 800 */
+        }
+        .chat-area {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 500px; /* Fixed height for chat history */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #e2e8f0; /* Gray 200 */
+            border-bottom: 1px solid #cbd5e1; /* Gray 300 */
+        }
+        .message-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #a78bfa; /* Violet 400 */
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .assistant-message {
+            background-color: #ffffff;
+            color: #333;
+            align-self: flex-start;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            border-bottom-left-radius: 4px;
+        }
+        .status-area {
+            padding: 12px 24px;
+            background-color: #f8fafc; /* Gray 50 */
+            font-size: 0.875rem; /* text-sm */
+            color: #4a5568; /* Gray 700 */
+            border-top: 1px solid #e2e8f0; /* Gray 200 */
+        }
+        .input-area {
+            display: flex;
+            padding: 20px 24px;
+            gap: 12px;
+            background-color: #f8fafc; /* Gray 50 */
+            border-top: 1px solid #e2e8f0; /* Gray 200 */
+        }
+        .input-area input[type="text"] {
+            flex-grow: 1;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1; /* Gray 300 */
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-area input[type="text"]:focus {
+            border-color: #6366f1; /* Indigo 500 */
+        }
+        .input-area button {
+            padding: 12px 20px;
+            background-color: #6366f1; /* Indigo 500 */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .input-area button:hover {
+            background-color: #4f46e5; /* Indigo 600 */
+        }
+        .input-area button:active {
+            transform: translateY(1px);
+        }
+        .command-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
+            gap: 10px;
+            padding: 20px 24px;
+            background-color: #f1f5f9; /* Blue Gray 100 */
+            border-top: 1px solid #e2e8f0; /* Gray 200 */
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .command-buttons button {
+            padding: 10px 15px;
+            background-color: #a78bfa; /* Violet 400 */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .command-buttons button:hover {
+            background-color: #8b5cf6; /* Violet 500 */
+        }
+        .command-buttons button:active {
+            transform: translateY(1px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .header {
+                font-size: 1.5rem;
+                padding: 15px 20px;
+            }
+            .chat-area, .input-area, .command-buttons {
+                padding: 15px 20px;
+            }
+            .input-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .input-area button {
+                width: 100%;
+            }
+            .command-buttons {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Smart Classroom Assistant</div>
+        <div id="chat-area" class="chat-area">
+            <!-- Chat messages will be appended here -->
+            <div class="assistant-message message-bubble">Hello! How can I help you today?</div>
+        </div>
+        <div id="status-area" class="status-area">Status: Ready</div>
+
+        <div class="command-buttons">
+            <button id="loadNotesBtn">Load Notes</button>
+            <button id="quizMeBtn">Quiz Me</button>
+            <button id="summarizeNotesBtn">Summarize Notes</button>
+            <button id="importantQuestionsFromNotesBtn">Important Qs (Notes)</button>
+            <button id="practiceQuestionsBtn">Practice Qs</button>
+            <button id="importantQuestionsFromQuizBtn">Important Qs (Quiz)</button>
+            <button id="importantPointsFromSummaryBtn">Important Pts (Summary)</button>
+            <button id="clearChatBtn">Clear Chat</button>
+            <button id="showHistoryBtn">Show History</button>
+            <button id="exitBtn">Exit</button>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your question or command...">
+            <button id="sendBtn">Send</button>
+            <button id="recordVoiceBtn">Record Voice</button>
+        </div>
+    </div>
+
+    <script>
+        const chatArea = document.getElementById('chat-area');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const recordVoiceBtn = document.getElementById('recordVoiceBtn');
+        const statusArea = document.getElementById('status-area');
+
+        // Command Buttons
+        const loadNotesBtn = document.getElementById('loadNotesBtn');
+        const quizMeBtn = document.getElementById('quizMeBtn');
+        const summarizeNotesBtn = document.getElementById('summarizeNotesBtn');
+        const importantQuestionsFromNotesBtn = document.getElementById('importantQuestionsFromNotesBtn');
+        const practiceQuestionsBtn = document.getElementById('practiceQuestionsBtn');
+        const importantQuestionsFromQuizBtn = document.getElementById('importantQuestionsFromQuizBtn');
+        const importantPointsFromSummaryBtn = document.getElementById('importantPointsFromSummaryBtn');
+        const clearChatBtn = document.getElementById('clearChatBtn');
+        const showHistoryBtn = document.getElementById('showHistoryBtn');
+        const exitBtn = document.getElementById('exitBtn');
+
+
+        function addMessage(text, sender) {
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message-bubble');
+            if (sender === 'user') {
+                messageBubble.classList.add('user-message');
+            } else {
+                messageBubble.classList.add('assistant-message');
+            }
+            messageBubble.textContent = text;
+            chatArea.appendChild(messageBubble);
+            chatArea.scrollTop = chatArea.scrollHeight; // Auto-scroll to bottom
+        }
+
+        function setStatus(message) {
+            statusArea.textContent = `Status: ${message}`;
+        }
+
+        // --- Function to call Python Backend ---
+        async function callPythonBackend(input, mode = 'text') {
+            setStatus('Thinking...');
+            try {
+                // The Canvas environment automatically routes fetch calls to the Python backend
+                // when the 'type' is set to 'code' and the language is python.
+                // The input to the Python script will be the body of this POST request.
+                const response = await fetch('/run_python_script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_input: input, input_mode: mode }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.text(); // Get the raw text response from Python
+                
+                // Python's print statements go to the console.
+                // The returned value is what we get here.
+                addMessage(result, 'assistant');
+                setStatus('Ready');
+
+            } catch (error) {
+                console.error('Error calling Python backend:', error);
+                addMessage(`Error: Could not connect to the assistant. ${error.message}`, 'assistant');
+                setStatus('Error');
+            }
+        }
+
+
+        // --- Event Listeners ---
+
+        sendBtn.addEventListener('click', () => {
+            const question = userInput.value.trim();
+            if (question) {
+                addMessage(question, 'user');
+                userInput.value = '';
+                callPythonBackend(question, 'text');
+            }
+        });
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        recordVoiceBtn.addEventListener('click', () => {
+            setStatus('Recording voice... (Simulated: Please type your voice input)');
+            // In a real setup, this would trigger actual microphone recording.
+            // For now, it prompts for text input as a simulation.
+            setTimeout(() => {
+                const voiceInput = prompt("Simulated Voice Input: Please type your question.");
+                if (voiceInput) {
+                    addMessage(voiceInput, 'user');
+                    callPythonBackend(voiceInput, 'voice');
+                } else {
+                    setStatus('Voice input cancelled or empty.');
+                }
+            }, 100); // Small delay for status update to show
+        });
+
+        // Command Button Event Listeners
+        loadNotesBtn.addEventListener('click', () => {
+            const filePath = prompt("Enter the path to your notes file (e.g., my_notes.txt, C:/Users/User/Documents/notes.pdf):");
+            if (filePath) {
+                addMessage(`Command: load notes "${filePath}"`, 'user');
+                callPythonBackend(`load notes ${filePath}`, 'command');
+            } else {
+                setStatus('Load notes cancelled.');
+            }
+        });
+
+        quizMeBtn.addEventListener('click', () => {
+            addMessage('Command: quiz me', 'user');
+            callPythonBackend('quiz me', 'command');
+        });
+
+        summarizeNotesBtn.addEventListener('click', () => {
+            addMessage('Command: summarize notes', 'user');
+            callPythonBackend('summarize notes', 'command');
+        });
+
+        importantQuestionsFromNotesBtn.addEventListener('click', () => {
+            addMessage('Command: important questions from notes', 'user');
+            callPythonBackend('important questions from notes', 'command');
+        });
+
+        practiceQuestionsBtn.addEventListener('click', () => {
+            addMessage('Command: practice questions', 'user');
+            callPythonBackend('practice questions', 'command');
+        });
+
+        importantQuestionsFromQuizBtn.addEventListener('click', () => {
+            addMessage('Command: important questions from quiz', 'user');
+            callPythonBackend('important questions from quiz', 'command');
+        });
+
+        importantPointsFromSummaryBtn.addEventListener('click', () => {
+            addMessage('Command: important points from summary', 'user');
+            callPythonBackend('important points from summary', 'command');
+        });
+
+        clearChatBtn.addEventListener('click', () => {
+            addMessage('Command: clear chat', 'user');
+            callPythonBackend('clear chat', 'command');
+            // The actual clearing of chat history in UI will happen when Python confirms it.
+            // For immediate visual feedback, you could clear it here, but it's better
+            // to wait for the backend's confirmation to keep state synchronized.
+        });
+
+        showHistoryBtn.addEventListener('click', () => {
+            addMessage('Command: show history', 'user');
+            callPythonBackend('show history', 'command');
+        });
+
+        exitBtn.addEventListener('click', () => {
+            addMessage('Command: exit', 'user');
+            callPythonBackend('exit', 'command');
+            // A real exit would close the window or disable controls.
+            // For this environment, we'll just show a message.
+            setStatus('Assistant Exited. You can close this window.');
+            sendBtn.disabled = true;
+            userInput.disabled = true;
+            recordVoiceBtn.disabled = true;
+            // Disable all command buttons as well
+            document.querySelectorAll('.command-buttons button').forEach(btn => btn.disabled = true);
+        });
+
+        // Initial status
+        setStatus('Ready');
+
+    </script>
+</body>
+</html>
