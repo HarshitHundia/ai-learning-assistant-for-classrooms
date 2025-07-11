@@ -1,13 +1,4 @@
-Smart Classroom Assistant: Interactive Demo & Code Walkthrough
-This document provides a guided tour through the core functionalities and code implementation of the Smart Classroom Assistant. It's structured like a simplified Jupyter Notebook to help you understand the concepts alongside the code snippets.
-
-1. Project Setup and Core Utilities
-Before diving into the main application, let's look at the essential imports and utility functions that power the assistant.
-
-1.1. Key Imports
-We leverage several powerful libraries for AI, web interaction, and file processing.
-
-import streamlit as st # For the web UI
+Smart Classroom Assistant: Interactive Demo & Code WalkthroughThis document provides a guided tour through the core functionalities and code implementation of the Smart Classroom Assistant. It's structured like a simplified Jupyter Notebook to help you understand the concepts alongside the code snippets.1. Project Setup and Core UtilitiesBefore diving into the main application, let's look at the essential imports and utility functions that power the assistant.1.1. Key ImportsWe leverage several powerful libraries for AI, web interaction, and file processing.import streamlit as st # For the web UI
 import requests # For making HTTP requests to APIs
 import json # For handling JSON data
 import os # For environment variables and file paths
@@ -29,11 +20,7 @@ import pyttsx3
 import threading
 import time
 import asyncio
-
-1.2. API Key Configuration
-Securely managing API keys is crucial. For local development, environment variables are recommended. For the Canvas environment, keys are often injected.
-
-# Gemini API Key (replace with your actual key for local running)
+1.2. API Key ConfigurationSecurely managing API keys is crucial. For local development, environment variables are recommended. For the Canvas environment, keys are often injected.# Gemini API Key (replace with your actual key for local running)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY_HERE")
 
 # Google Custom Search API Keys (for web search tool)
@@ -42,14 +29,7 @@ GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID", "YOUR_GOOGLE_CSE_ID_HERE")
 
 # In the full Streamlit app, these are handled via st.session_state
 # and warnings are displayed if placeholders are still present.
-
-2. Document Processing: Loading and Chunking Notes
-The assistant can read various document types and prepare them for contextual question-answering by breaking them into manageable chunks.
-
-2.1. Reading Document Content
-This function handles .txt, .pdf, and .docx files.
-
-def read_document_content_from_file(file_path):
+2. Document Processing: Loading and Chunking NotesThe assistant can read various document types and prepare them for contextual question-answering by breaking them into manageable chunks.2.1. Reading Document ContentThis function handles .txt, .pdf, and .docx files.def read_document_content_from_file(file_path):
     """
     Reads the content of a text file, PDF, or DOCX and returns it as a string.
     Handles basic file reading errors and informs about OCR limitation for PDFs.
@@ -99,11 +79,7 @@ def read_document_content_from_file(file_path):
 # notes_content = read_document_content_from_file("science_notes.txt")
 # if notes_content:
 #     print(f"Loaded {len(notes_content)} characters.")
-
-2.2. Text Chunking and Relevant Chunk Retrieval
-Large documents are split into smaller, overlapping chunks. When a question is asked, only the most relevant chunks are selected as context for the local model.
-
-def chunk_text(text, chunk_size=400, overlap=50):
+2.2. Text Chunking and Relevant Chunk RetrievalLarge documents are split into smaller, overlapping chunks. When a question is asked, only the most relevant chunks are selected as context for the local model.def chunk_text(text, chunk_size=400, overlap=50):
     """Splits text into chunks of specified size with overlap."""
     words = text.split()
     chunks = []
@@ -138,14 +114,7 @@ def find_relevant_chunks(question, chunks, top_n=2):
 # print(f"Chunks: {chunks}")
 # relevant = find_relevant_chunks("What are eukaryotic cells?", chunks)
 # print(f"Relevant chunks: {relevant}")
-
-3. Local AI Models: Optimized with OpenVINO
-For fast, on-device contextual Q&A and emotion detection, we use OpenVINO to optimize Hugging Face models.
-
-3.1. Loading and Optimizing Flan-T5 for QA
-The OVModelForSeq2SeqLM class handles the conversion and loading for sequence-to-sequence tasks like Q&A.
-
-# This function is cached by Streamlit to run only once
+3. Local AI Models: Optimized with OpenVINOFor fast, on-device contextual Q&A and emotion detection, we use OpenVINO to optimize Hugging Face models.3.1. Loading and Optimizing Flan-T5 for QAThe OVModelForSeq2SeqLM class handles the conversion and loading for sequence-to-sequence tasks like Q&A.# This function is cached by Streamlit to run only once
 # @st.cache_resource
 def load_local_qa_generator_ov():
     """Loads and optimizes the Flan-T5 model with OpenVINO."""
@@ -192,11 +161,7 @@ def get_local_answer(question_text, context_text=None):
         return "LOCAL_MODEL_FALLBACK_TRIGGERED"
     
     return answer
-
-3.2. Loading and Optimizing Emotion Classifier
-Similar process for the OVModelForSequenceClassification model.
-
-# This function is cached by Streamlit to run only once
+3.2. Loading and Optimizing Emotion ClassifierSimilar process for the OVModelForSequenceClassification model.# This function is cached by Streamlit to run only once
 # @st.cache_resource
 def load_emotion_classifier_ov():
     """Loads and optimizes the emotion classifier with OpenVINO."""
@@ -244,14 +209,7 @@ def detect_emotion(text: str):
     except Exception as e:
         print(f"Error detecting emotion with OpenVINO: {e}")
         return {"label": "error", "score": 0.0, "message": f"Error detecting emotion: {e}"}
-
-4. Cloud AI Services: Gemini API with Tool Use
-For general knowledge and complex generation tasks, we leverage the powerful Gemini API, which can also use external tools like Google Search.
-
-4.1. Real-time Search Tool
-This function simulates (or integrates with) Google Custom Search.
-
-async def search_tool(query: str) -> str:
+4. Cloud AI Services: Gemini API with Tool UseFor general knowledge and complex generation tasks, we leverage the powerful Gemini API, which can also use external tools like Google Search.4.1. Real-time Search ToolThis function simulates (or integrates with) Google Custom Search.async def search_tool(query: str) -> str:
     """
     Performs a real-time web search using Google Custom Search JSON API.
     (Requires GOOGLE_CSE_API_KEY and GOOGLE_CSE_ID to be configured).
@@ -278,11 +236,7 @@ async def search_tool(query: str) -> str:
         return f"Error connecting to search service: {e}."
     except Exception as e:
         return f"An unexpected error occurred during search: {e}"
-
-4.2. Getting Answers from Gemini (with Tool Integration)
-This function manages the conversation history and handles potential tool calls from Gemini.
-
-async def get_gemini_answer(question_text: str):
+4.2. Getting Answers from Gemini (with Tool Integration)This function manages the conversation history and handles potential tool calls from Gemini.async def get_gemini_answer(question_text: str):
     """
     Fetches an answer from the Gemini 2.0 Flash API, incorporating tool use
     for real-time information and conversational memory.
@@ -331,7 +285,7 @@ async def get_gemini_answer(question_text: str):
                 response_after_tool.raise_for_status()
                 result_after_tool = response_after_tool.json()
 
-                if result_after_tool.get("candidates") and result_after_tool["candidates"][0].get("content") and result_after_tool["candidates"][0]["content"].get("parts"]:
+                if result_after_tool.get("candidates") and result_after_tool["candidates"][0].get("content") and result_after_tool["candidates"][0]["content"].get("parts"):
                     final_answer = result_after_tool["candidates"][0]["content"]["parts"][0]["text"]
                     chat_history.append({"role": "model", "parts": [{"text": final_answer}]})
                     return final_answer
@@ -352,12 +306,7 @@ async def get_gemini_answer(question_text: str):
         return f"Error calling Gemini API: {e}."
     except Exception as e:
         return f"An unexpected error occurred with Gemini: {e}"
-
-5. Educational Features: Quiz Generation & Summarization
-Leveraging Gemini's generative capabilities for creating study aids.
-
-5.1. Generating Quizzes
-async def generate_quiz(topic: str, context: str):
+5. Educational Features: Quiz Generation & SummarizationLeveraging Gemini's generative capabilities for creating study aids.5.1. Generating Quizzesasync def generate_quiz(topic: str, context: str):
     """Generates quiz questions based on a topic and provided context using Gemini."""
     quiz_prompt = f"""
     You are an educational assistant. Generate 5-7 multiple-choice quiz questions (with 4 options each) and their correct answers based on the following text about {topic}.
@@ -391,9 +340,7 @@ async def generate_quiz(topic: str, context: str):
             return "Could not generate quiz."
     except Exception as e:
         return f"Error generating quiz: {e}"
-
-5.2. Summarizing Content
-async def summarize_content(text_to_summarize: str):
+5.2. Summarizing Contentasync def summarize_content(text_to_summarize: str):
     """Summarizes provided text content using Gemini."""
     summary_prompt = f"""
     Please provide a concise and informative summary of the following text using a numbered list (1., 2., 3., etc.).
@@ -416,30 +363,21 @@ async def summarize_content(text_to_summarize: str):
             return "No summary generated."
     except Exception as e:
         return f"Error summarizing content: {e}"
-
-6. Voice Assistant Utility (Console-based)
-While the Streamlit app is text-based, a separate console utility demonstrates voice interaction.
-
-6.1. Recording Audio
-def record_audio(duration_seconds=5, samplerate=16000):
+6. Voice Assistant Utility (Console-based)While the Streamlit app is text-based, a separate console utility demonstrates voice interaction.6.1. Recording Audiodef record_audio(duration_seconds=5, samplerate=16000):
     """Records audio input from the microphone."""
     # ... (full implementation as in voice_assistant_code.py)
     # For brevity, actual recording logic is omitted here.
     print("🎤 Recording... (simulated)")
     # return "question.wav" # Simulated return
     pass
-
-6.2. Transcribing Audio with Whisper
-def transcribe_audio(audio_file_path):
+6.2. Transcribing Audio with Whisperdef transcribe_audio(audio_file_path):
     """Transcribes audio using the local Whisper model."""
     # ... (full implementation as in voice_assistant_code.py)
     # For brevity, actual transcription logic is omitted here.
     print(f"🎧 Transcribing {audio_file_path} with Whisper... (simulated)")
     # return "What is the capital of France?" # Simulated return
     pass
-
-6.3. Speaking Answers with pyttsx3
-import threading
+6.3. Speaking Answers with pyttsx3import threading
 import time
 import pyttsx3 # Ensure pyttsx3 is imported
 
@@ -480,11 +418,7 @@ def stop_speaking():
         stop_flag.set()
         if global_engine and global_engine.isBusy():
             global_engine.stop()
-
-7. Putting It All Together: The Streamlit App Flow
-The smart_assistant_app_ui.py orchestrates all these components within a Streamlit web interface.
-
-# Simplified representation of the main Streamlit app logic
+7. Putting It All Together: The Streamlit App FlowThe smart_assistant_app_ui.py orchestrates all these components within a Streamlit web interface.# Simplified representation of the main Streamlit app logic
 # (Full code is in smart_assistant_app_ui.py)
 
 # Initialize session state variables
@@ -533,6 +467,4 @@ The smart_assistant_app_ui.py orchestrates all these components within a Streaml
 #         asyncio.run(get_gemini_answer(user_input))
     
 #     st.rerun() # Rerun to update UI
-
-8. Conclusion
-This interactive walkthrough demonstrates the modular design and key functionalities of the Smart Classroom Assistant. By combining local, optimized AI models with powerful cloud services and an intuitive Streamlit interface, the project delivers a versatile tool for enhancing educational experiences. The structured approach allows for easy understanding, maintenance, and future expansion.
+8. ConclusionThis interactive walkthrough demonstrates the modular design and key functionalities of the Smart Classroom Assistant. By combining local, optimized AI models with powerful cloud services and an intuitive Streamlit interface, the project delivers a versatile tool for enhancing educational experiences. The structured approach allows for easy understanding, maintenance, and future expansion.
