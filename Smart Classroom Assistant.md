@@ -7,10 +7,10 @@ Before diving into the main application, let's look at the essential imports and
 1.1. Key Imports
 We leverage several powerful libraries for AI, web interaction, and file processing.
 
-'''python import streamlit as st # For the web UI
-'''python import requests # For making HTTP requests to APIs
-'''python import json # For handling JSON data
-'''python import os # For environment variables and file paths
+import streamlit as st # For the web UI
+import requests # For making HTTP requests to APIs
+import json # For handling JSON data
+import os # For environment variables and file paths
 
 # For local model optimization
 from optimum.intel.openvino import OVModelForSeq2SeqLM, OVModelForSequenceClassification
