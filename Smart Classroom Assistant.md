@@ -1,237 +1,158 @@
-# Smart Classroom Assistant: Interactive Demo & Code Walkthrough
+```markdown
+# Smart Classroom Assistant – AI-Powered Interactive Learning Platform
 
-This document provides a guided tour through the **core functionalities** and **code implementation** of the Smart Classroom Assistant. It is structured like a simplified Jupyter Notebook to help you understand the concepts alongside code snippets.
-
----
-
-## ✨ Table of Contents
-
-1. [Project Setup and Core Utilities](#project-setup-and-core-utilities)
-   - [Key Imports](#key-imports)
-   - [API Key Configuration](#api-key-configuration)
-2. [Document Processing: Loading and Chunking Notes](#document-processing-loading-and-chunking-notes)
-   - [Reading Document Content](#reading-document-content)
-   - [Text Chunking and Relevant Chunk Retrieval](#text-chunking-and-relevant-chunk-retrieval)
-3. [Local AI Models: Optimized with OpenVINO](#local-ai-models-optimized-with-openvino)
-   - [Loading Flan-T5 for QA](#loading-flan-t5-for-qa)
-   - [Loading Emotion Classifier](#loading-emotion-classifier)
-4. [Cloud AI Services: Gemini API with Tool Use](#cloud-ai-services-gemini-api-with-tool-use)
-   - [Real-time Search Tool](#real-time-search-tool)
-   - [Getting Answers from Gemini](#getting-answers-from-gemini)
-5. [Educational Features: Quiz Generation & Summarization](#educational-features-quiz-generation--summarization)
-   - [Generating Quizzes](#generating-quizzes)
-   - [Summarizing Content](#summarizing-content)
-6. [Voice Assistant Utility (Console-based)](#voice-assistant-utility-console-based)
-   - [Recording Audio](#recording-audio)
-   - [Transcribing Audio](#transcribing-audio)
-   - [Speaking Answers with pyttsx3](#speaking-answers-with-pyttsx3)
-7. [Putting It All Together: The Streamlit App Flow](#putting-it-all-together-the-streamlit-app-flow)
-8. [Conclusion](#conclusion)
+An interactive AI assistant that enhances classroom learning by **answering contextual questions from notes, generating quizzes, summarizing content, and detecting emotions**, using optimized local models with OpenVINO and Gemini cloud APIs.
 
 ---
 
-## 1. Project Setup and Core Utilities
+## 🚀 **Project Overview**
 
-### 1.1. Key Imports
+This project implements a **Smart Classroom Assistant** capable of:
 
-```python
-import streamlit as st
-import requests
-import json
-import os
+- 📄 Reading and processing documents (`.txt`, `.pdf`, `.docx`)
+- 🤖 Answering questions contextually using local Flan-T5 (OpenVINO optimized)
+- 🤖 Answering questions rather then the document (general questions using api)
+- 📝 Generating multiple-choice quizzes for revision  
+- ✨ Summarizing notes for quick study  
+- 😊 Detecting emotions from user input  
+- 🎤 Transcribing speech to text using Whisper  
+- 💬 Speaking out answers using pyttsx3
 
-from optimum.intel.openvino import OVModelForSeq2SeqLM, OVModelForSequenceClassification
-from transformers import pipeline, AutoTokenizer, AutoConfig
+All features are accessible through a **Streamlit web interface** for interactive and intuitive use.
 
-import pypdf
-from docx import Document
+---
 
-import whisper
-import sounddevice as sd
-import numpy as np
-import scipy.io.wavfile as wav
-import pyttsx3
-import threading
-import time
-import asyncio
+## 🧠 **Key AI Models & APIs Used**
+
+| Model/API | Purpose | Optimization |
+| --- | --- | --- |
+| **Flan-T5 Base** | Contextual Question Answering | OpenVINO optimized for CPU inference |
+| **Gemini Flash API** | Cloud-based general Q&A, summarization, quiz generation | Google Generative AI |
+| **DistilRoberta Emotion Classifier** | Emotion detection from text | OpenVINO optimized |
+| **Whisper** | Speech-to-text transcription | Local execution |
+| **pyttsx3** | Text-to-speech | Local execution |
+
+---
+
+## ⚙️ **Features**
+
+✅ Read and process `.txt`, `.pdf`, `.docx` notes  
+✅ Chunk text for efficient QA context  
+✅ Find most relevant chunks for user queries  
+✅ Answer questions using local models, with Gemini fallback  
+✅ Generate quizzes for any topic  
+✅ Summarize long notes to key points  
+✅ Detect user's emotional sentiment  
+✅ Voice interaction via Whisper + pyttsx3
+
+---
+
+## 📂 **Project Structure**
+
+```
+
+ai-learning-assistant-for-classrooms/
+├── main\_smart\_assistant\_app\_ui.py
+├── ov\_flan\_t5\_base/                # OpenVINO optimized Flan-T5 model files (if saved locally)
+├── ov\_emotion\_classifier/          # OpenVINO optimized emotion model files (if saved locally)
+├── requirements.txt
+└── README.md
+
 ````
 
+*(Adjust if your actual repo folders differ)*
+
 ---
 
-### 1.2. API Key Configuration
+## 💻 **Installation & Setup**
 
-```python
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY_HERE")
-GOOGLE_CSE_API_KEY = os.getenv("GOOGLE_CSE_API_KEY", "YOUR_GOOGLE_CSE_API_KEY_HERE")
-GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID", "YOUR_GOOGLE_CSE_ID_HERE")
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/HarshitHundia/ai-learning-assistant-for-classrooms.git
+cd ai-learning-assistant-for-classrooms
+````
+
+2. **Create a virtual environment**
+
+```bash
+python -m venv venv
+source venv/bin/activate     # On Windows: venv\Scripts\activate
+```
+
+3. **Install dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+4. **Setup Environment Variables**
+
+Create a `.env` file or export directly:
+
+```
+GEMINI_API_KEY=your_gemini_api_key_here
+GOOGLE_CSE_API_KEY=your_google_cse_api_key_here
+GOOGLE_CSE_ID=your_google_cse_id_here
 ```
 
 ---
 
-## 2. Document Processing: Loading and Chunking Notes
+## ▶️ **Running the Application**
 
-### 2.1. Reading Document Content
+Run the Streamlit app:
 
-Supports `.txt`, `.pdf`, and `.docx`:
-
-```python
-def read_document_content_from_file(file_path):
-    ...
+```bash
+streamlit run main_smart_assistant_app_ui.py
 ```
 
-Example:
-
-```python
-notes_content = read_document_content_from_file("science_notes.txt")
-```
+The web interface will launch in your browser at [localhost:8501](http://localhost:8501).
 
 ---
 
-### 2.2. Text Chunking and Relevant Chunk Retrieval
+## 📝 **Usage Example**
 
-#### Chunking:
+1. Upload your class notes in `.txt`, `.pdf`, or `.docx` format
+2. Ask contextual questions like:
 
-```python
-def chunk_text(text, chunk_size=400, overlap=50):
-    ...
-```
+   * *“Explain photosynthesis steps.”*
+3. Generate quizzes for quick revision:
 
-#### Finding Relevant Chunks:
+   * *“Quiz me on this topic.”*
+4. Summarize lengthy notes:
 
-```python
-def find_relevant_chunks(question, chunks, top_n=2):
-    ...
-```
-
----
-
-## 3. Local AI Models: Optimized with OpenVINO
-
-### 3.1. Loading Flan-T5 for QA
-
-```python
-def load_local_qa_generator_ov():
-    ...
-```
-
-#### Generating Answers:
-
-```python
-def get_local_answer(question_text, context_text=None):
-    ...
-```
+   * *“Summarize the chapter on cell biology.”*
+5. Detect your emotional sentiment based on inputs.
+6. Other than document, even general questions.
 
 ---
 
-### 3.2. Loading Emotion Classifier
+## 🔧 **System Requirements**
 
-```python
-def load_emotion_classifier_ov():
-    ...
-```
-
-#### Detecting Emotion:
-
-```python
-def detect_emotion(text: str):
-    ...
-```
+* Python >= 3.8
+* Streamlit
+* Transformers
+* Optimum\[OpenVINO]
+* Whisper
+* pyttsx3
+* Other dependencies listed in `requirements.txt`
 
 ---
 
-## 4. Cloud AI Services: Gemini API with Tool Use
+## 📈 **Future Enhancements**
 
-### 4.1. Real-time Search Tool
-
-```python
-async def search_tool(query: str) -> str:
-    ...
-```
+* Deploy to Hugging Face Spaces or Render
+* Integrate multimodal visual question answering
+* Support for classroom attendance and analytics
+* Personalised student dashboards
 
 ---
 
-### 4.2. Getting Answers from Gemini
+### ✨ **Acknowledgements**
 
-```python
-async def get_gemini_answer(question_text: str):
-    ...
-```
-
----
-
-## 5. Educational Features: Quiz Generation & Summarization
-
-### 5.1. Generating Quizzes
-
-```python
-async def generate_quiz(topic: str, context: str):
-    ...
-```
+* Google Generative AI – Gemini APIs
+* Hugging Face Transformers & Optimum
+* OpenVINO Toolkit
+* Streamlit for rapid prototyping
 
 ---
-
-### 5.2. Summarizing Content
-
-```python
-async def summarize_content(text_to_summarize: str):
-    ...
-```
-
----
-
-## 6. Voice Assistant Utility (Console-based)
-
-### 6.1. Recording Audio
-
-```python
-def record_audio(duration_seconds=5, samplerate=16000):
-    ...
-```
-
----
-
-### 6.2. Transcribing Audio
-
-```python
-def transcribe_audio(audio_file_path):
-    ...
-```
-
----
-
-### 6.3. Speaking Answers with pyttsx3
-
-```python
-def speak_answer(answer_text):
-    ...
-```
-
----
-
-## 7. Putting It All Together: The Streamlit App Flow
-
-* File uploader in sidebar for notes.
-* Chat display for conversation history.
-* User input routed to local model first for contextual Q\&A.
-* Fallback to Gemini if local model fails or no relevant context is found.
-* Educational commands like **"summarize notes"** or **"quiz me"** are handled dynamically.
-
----
-
-## 8. Conclusion
-
-This interactive walkthrough demonstrates the **modular design** and **key functionalities** of the Smart Classroom Assistant. By combining **local optimized AI models** with **powerful cloud services** and an intuitive **Streamlit interface**, the project delivers a versatile tool to enhance educational experiences.
-
----
-
-### 🚀 **Next Steps**
-
-* Integrate vector store-based semantic search for improved chunk retrieval.
-* Enhance voice assistant with real-time Whisper and pyttsx3 pipelines.
-* Extend quiz generator to support difficulty levels and Bloom’s taxonomy tagging.
-
----
-
-> **Author:** Harshit
-> **Project:** Smart Classroom Assistant
-> **Date:** July 2025
