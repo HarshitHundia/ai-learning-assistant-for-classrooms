@@ -47,23 +47,6 @@ All features are accessible through a **Streamlit web interface** for interactiv
 
 ---
 
-## 📂 **Project Structure**
-
-```
-
-ai-learning-assistant-for-classrooms/
-├── main\_smart\_assistant\_app\_ui.py
-├── ov\_flan\_t5\_base/                # OpenVINO optimized Flan-T5 model files (if saved locally)
-├── ov\_emotion\_classifier/          # OpenVINO optimized emotion model files (if saved locally)
-├── requirements.txt
-└── README.md
-
-````
-
-*(Adjust if your actual repo folders differ)*
-
----
-
 ## 💻 **Installation & Setup**
 
 1. **Clone the repository**
