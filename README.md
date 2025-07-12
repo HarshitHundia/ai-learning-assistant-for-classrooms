@@ -9,7 +9,8 @@ An **AI-powered interactive learning assistant** that helps students with:
 - ✅ **Emotion detection** to gauge student mood  
 - ✅ **Voice-based interaction** (speech-to-text and text-to-speech)
 
-Built using **Python, Streamlit, OpenVINO optimized models, and Gemini API**, this project aims to enhance classroom learning by making it **more interactive, personalized, and efficient**.
+Built using **Python, Streamlit, OpenVINO optimized models, and Gemini API**,
+this project aims to enhance classroom learning by making it **more interactive, personalized, and efficient**.
 
 ---
 
