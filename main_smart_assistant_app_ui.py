@@ -6,6 +6,7 @@ from transformers import pipeline # For the local Flan-T5 model and emotion clas
 import string # Import string module for punctuation
 import pypdf # For reading PDF files
 from docx import Document # For reading .docx files
+import numpy as np
 # No need for sounddevice, whisper, pyttsx3, numpy, scipy.io.wavfile, threading, time, msvcrt for Streamlit UI
 
 # --- Configuration & Global Variables ---
