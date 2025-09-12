@@ -1,5 +1,5 @@
 ```markdown
-# 📚 Smart Classroom Assistant
+# 📚 Smart Classroom Assistant - Intel Unnati Industrial Training
 
 An AI-powered interactive learning assistant that helps students with:
 
